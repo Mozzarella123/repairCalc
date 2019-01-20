@@ -4,4 +4,7 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 node_modules
+.vscode
 build/
+dist
+workspace.code-workspace

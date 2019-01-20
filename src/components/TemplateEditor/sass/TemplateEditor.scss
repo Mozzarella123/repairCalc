@@ -1,0 +1,25 @@
+.template-blocks {
+    padding: 30px;
+    background: gray;
+    display: grid;
+    grid-row-gap: 30px;
+    grid-template-columns: 1fr;
+    .template-block {
+        background: #fff;
+        padding: 30px;
+        position: relative;
+        &:hover {
+            .template-block-toolbar {
+                visibility: visible;
+            }
+        }
+        &-toolbar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            background: #f2f2f2;
+            visibility: hidden;
+        }
+    }
+}
