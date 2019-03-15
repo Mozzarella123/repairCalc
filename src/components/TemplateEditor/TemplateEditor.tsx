@@ -110,6 +110,7 @@ export const TemplateEditor = observer(() => {
                 currentTemplate.editingBlock.setContent(
                   currentTemplate.editingBlock.tempContent
                 );
+                console.log(JSON.parse(currentTemplate.editingBlock.tempContent))
                 currentTemplate.editingBlock.setEditing(false);
               }}
               color="primary"
