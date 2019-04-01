@@ -1,9 +1,9 @@
-class Context {
-    contextName : string;
-    parentContext : Context;
-    contextType : any;
+class Scope {
+    scopeName : string;
+    parentScope : Scope;
+    scopeType : any;
     parameters : any;
     formulas: Array<any>;
 }
 
-export default Context;
+export default Scope;

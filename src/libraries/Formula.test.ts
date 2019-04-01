@@ -1,7 +1,8 @@
 import "jest";
 import EvaluatorService from "./EvaluatorService";
 import { equal } from "assert";
-import Context from "./Context";
+import Scope from "./Context";
+
 test("formula test", () => {
   const entityRoom = {
     name: "room",
@@ -28,8 +29,8 @@ test("formula test", () => {
         expression: "Sfloor * count",
         parameters: {
           Sfloor: {
-            scope: "$.parentContext",
-            path: '$.contextType.formulas["Sfloor"]'
+            scope: "$.parentScope",
+            path: '$.scopeType.formulas["Sfloor"]'
           },
           count: {
             scope: "$",
@@ -45,24 +46,63 @@ test("formula test", () => {
       }
     ]
   };
-  const context = new Context();
-  context.contextType = entityWork;
+  const context = new Scope();
+  context.scopeType = entityWork;
   context.parameters = {
-    count: 1
+    count: 5
   };
-  const parentContext = new Context();
-  parentContext.contextType = entityRoom;
+  const parentContext = new Scope();
+  parentContext.scopeType = entityRoom;
   parentContext.parameters = {
-    length: 1,
-    width: 1
+    length: 2,
+    width: 4
   };
-  context.parentContext = parentContext;
+  context.parentScope = parentContext;
 
   const service = new EvaluatorService();
+  const result = service.evaluate(context, context.scopeType.formulas["price"]);
+
+  equal(result, 2 * 4 * 5);
+});
+
+test("scope without parameters", () => {
+  const simpleScope = {
+    formulas: {
+      simple: {
+        expression: "2 * 5"
+      }
+    }
+  };
+  const service = new EvaluatorService();
+
+  const result = service.evaluate({}, simpleScope.formulas.simple);
+
+  equal(result, 10);
+});
+
+test("scope with params in", () => {
+  const scopeWithParams = {
+    formulas: {
+      complex: {
+        expression: "2 * 5 * count",
+        parameters: {
+          count: {
+            scope: "$",
+            path: '$.parameters["count"]'
+          }
+        }
+      }
+    }
+  };
+  const service = new EvaluatorService();
+  const complexScope = new Scope();
+  complexScope.parameters = {
+    count: 5
+  };
   const result = service.evaluate(
-    context,
-    context.contextType.formulas["price"]
+    complexScope,
+    scopeWithParams.formulas.complex
   );
 
-  equal(result, 1);
+  equal(result, 50);
 });

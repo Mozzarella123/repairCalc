@@ -22,4 +22,5 @@ class EvaluatorService {
   }
 }
 
+
 export default EvaluatorService;

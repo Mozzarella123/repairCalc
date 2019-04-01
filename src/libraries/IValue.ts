@@ -1,3 +1,0 @@
-interface IValue {
-    value : () => Number;
-}
