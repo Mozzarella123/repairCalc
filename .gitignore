@@ -8,3 +8,4 @@ node_modules
 build/
 dist
 workspace.code-workspace
+package-lock.json
