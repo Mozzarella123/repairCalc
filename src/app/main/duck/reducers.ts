@@ -1,10 +1,13 @@
 import { Action, ActionTypes, MenuTab } from "./types";
+import Context from "../../../libraries/Context";
 
 export interface AppState {
     currentTab: MenuTab;
+    rooms : Array<Context>;
 }
 const initialAppState: AppState = {
-    currentTab: MenuTab.RoomEditor
+    currentTab: MenuTab.RoomEditor,
+    rooms : []
 }
 
 export const appReducer = (state = initialAppState, action: Action): AppState => {
