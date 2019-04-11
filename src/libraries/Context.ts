@@ -1,9 +1,12 @@
-class Scope {
-    scopeName : string;
-    parentScope : Scope;
-    scopeType : any;
-    parameters : any;
-    formulas: Array<any>;
+import { ContextType } from "./EvaluatorService";
+
+interface Context {
+    scopeName? : string;
+    parentContext? : Context;
+    scopeType? : ContextType;
+    parameters? : {
+        [key : string] : number | Array<Context> | Context
+    };
 }
 
-export default Scope;
+export default Context;

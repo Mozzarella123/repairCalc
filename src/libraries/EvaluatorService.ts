@@ -1,26 +1,52 @@
 import * as jsonpath from "jsonpath";
 import * as math from "mathjs";
+import Context from "./Context";
+import { json } from "d3";
 
 class EvaluatorService {
-  evaluate(context: any, formula: any) {
-    const { expression, parameters } = formula;
-    const expressionScope: any = {};
+  evaluate(context: Context | Array<Context>, formula: Formula) {
+    const { expression, parameters } = formula,
+      expressionContext: any = {};
 
     for (let key in parameters) {
-      let param = parameters[key];
-      const scope = jsonpath.value(context, param.scope);
-      let value = jsonpath.value(scope, param.path);
+      const param = parameters[key],
+        { path = "$", scope = "$", type = "single" } = param;
+        let scopeObj, value;
+      scopeObj = jsonpath.query(context, scope);
+      value = [];
+      for (let scopeElem of scopeObj) {
+        let paramValue = jsonpath.value(scopeElem, path);
+        if(typeof paramValue !== "number") {
+          paramValue = this.evaluate(scopeElem, jsonpath.value(scopeElem, path));
+        }
 
-      if (typeof value != "number") {
-        value = this.evaluate(scope, value);
+        value.push(paramValue);
       }
-
-      expressionScope[key] = value;
+      expressionContext[key] = value.length > 1 ? value : value[0] ;
     }
-
-    return math.eval(expression, expressionScope);
+    
+    return math.eval(expression, expressionContext);
   }
 }
 
+export interface ContextType {
+  name?: string;
+  formulas: {
+    [key: string]: Formula;
+  };
+}
+
+interface Formula {
+  expression: string;
+  parameters?: {
+    [key: string]: Parameter;
+  };
+}
+
+interface Parameter {
+  scope?: string;
+  path: string;
+  type?: string;
+}
 
 export default EvaluatorService;

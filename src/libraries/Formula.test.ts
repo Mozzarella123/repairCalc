@@ -1,63 +1,56 @@
 import "jest";
-import EvaluatorService from "./EvaluatorService";
-import { equal } from "assert";
-import Scope from "./Context";
+import EvaluatorService, { ContextType } from "./EvaluatorService";
+import { equal, deepEqual } from "assert";
+import Context from "./Context";
+import * as jsonpath from "jsonpath";
 
 test("formula test", () => {
-  const entityRoom = {
+  const entityRoom: ContextType = {
     name: "room",
     formulas: {
       Sfloor: {
         expression: "length * width",
         parameters: {
           length: {
-            scope: "$",
             path: '$.parameters["length"]'
           },
           width: {
-            scope: "$",
             path: '$.parameters["width"]'
           }
         }
       }
     }
   };
-  const entityWork = {
+  const entityWork: ContextType = {
     name: "worktype",
     formulas: {
       price: {
         expression: "Sfloor * count",
         parameters: {
           Sfloor: {
-            scope: "$.parentScope",
+            scope: "$.parentContext",
             path: '$.scopeType.formulas["Sfloor"]'
           },
           count: {
-            scope: "$",
             path: '$.parameters["count"]'
           }
         }
       }
+    }
+  };
+  const context: Context = {
+    scopeType: entityWork,
+    parameters: {
+      count: 5
     },
-    parameters: [
-      {
-        name: "count",
-        type: "number"
+    parentContext: {
+      scopeType: entityRoom,
+      parameters: {
+        length: 2,
+        width: 4
       }
-    ]
+    }
   };
-  const context = new Scope();
-  context.scopeType = entityWork;
-  context.parameters = {
-    count: 5
-  };
-  const parentContext = new Scope();
-  parentContext.scopeType = entityRoom;
-  parentContext.parameters = {
-    length: 2,
-    width: 4
-  };
-  context.parentScope = parentContext;
 
   const service = new EvaluatorService();
   const result = service.evaluate(context, context.scopeType.formulas["price"]);
@@ -66,7 +59,7 @@ test("formula test", () => {
 });
 
 test("scope without parameters", () => {
-  const simpleScope = {
+  const simpleContext = {
     formulas: {
       simple: {
         expression: "2 * 5"
@@ -75,34 +68,95 @@ test("scope without parameters", () => {
   };
   const service = new EvaluatorService();
 
-  const result = service.evaluate({}, simpleScope.formulas.simple);
+  const result = service.evaluate({}, simpleContext.formulas.simple);
 
   equal(result, 10);
 });
 
 test("scope with params in", () => {
   const scopeWithParams = {
-    formulas: {
-      complex: {
-        expression: "2 * 5 * count",
-        parameters: {
-          count: {
-            scope: "$",
-            path: '$.parameters["count"]'
+      formulas: {
+        complex: {
+          expression: "2 * 5 * count",
+          parameters: {
+            count: {
+              path: '$.parameters["count"]'
+            }
           }
         }
       }
-    }
-  };
+    },
+    complexContext = {
+      parameters: {
+        count: 5
+      }
+    };
+
   const service = new EvaluatorService();
-  const complexScope = new Scope();
-  complexScope.parameters = {
-    count: 5
-  };
   const result = service.evaluate(
-    complexScope,
+    complexContext,
     scopeWithParams.formulas.complex
   );
 
   equal(result, 50);
+});
+
+test("scope with array params", () => {
+  const room = {
+      formulas: {
+        sum: {
+          expression: "sum(works)",
+          parameters: {
+            works: {
+              type: "array",
+              scope: "$.parameters.works[*]",
+              path: "$.scopeType.formulas.price"
+            }
+          }
+        }
+      }
+    },
+    work = {
+      formulas: {
+        price: {
+          expression: "2 * 5"
+        }
+      }
+    },
+    workContext = {
+      scopeType : work
+    },
+    roomContext = {
+      parameters : {works : [workContext, workContext]}
+    }
+
+  const service = new EvaluatorService();
+  const result = service.evaluate(roomContext, room.formulas.sum);
+
+  equal(result, 20);
+});
+
+test("ex", () => {
+  const scope = {
+    works: [
+      {
+        formulas: {
+          price: {
+            expression: "2 * 5"
+          }
+        }
+      },
+      {
+        formulas: {
+          price: {
+            expression: "2 * 6"
+          }
+        }
+      }
+    ]
+  };
+
+  const result = jsonpath.query(scope, "$.works[*].formulas.price");
+  
+  deepEqual(result, [{ expression: "2 * 5" }, { expression: "2 * 6" }]);
 });
