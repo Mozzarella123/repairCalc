@@ -3,7 +3,7 @@ import { TemplateEditor } from "./templateEditor/TemplateEditor";
 import RoomEditor from "./roomEditor/RoomEditor";
 import { Provider } from "react-redux";
 import { MainContainer } from "./main/MainContainer";
-import { Menu } from "./main/Menu";
+import { Menu } from "./Menu";
 import { Route } from "react-router-dom";
 
 export const App = () => (

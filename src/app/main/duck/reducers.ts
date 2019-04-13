@@ -1,13 +1,16 @@
 import { Action, ActionTypes, MenuTab } from "./types";
-import Context from "../../../libraries/Context";
+import { Room } from "../rooms/duck/types";
 
 export interface AppState {
     currentTab: MenuTab;
-    rooms : Array<Context>;
+    project? : {
+        title : string,
+        currentRoom? : string;
+        rooms : Array<Room>;        
+    }
 }
 const initialAppState: AppState = {
     currentTab: MenuTab.RoomEditor,
-    rooms : []
 }
 
 export const appReducer = (state = initialAppState, action: Action): AppState => {
@@ -18,7 +21,15 @@ export const appReducer = (state = initialAppState, action: Action): AppState =>
                 ...state,
                 currentTab: action.tab
             }
-
+        case ActionTypes.CREATE_PROJECT: {
+            return {
+                ...state,
+                project: {
+                    title: action.title,
+                    rooms : []
+                }
+            }
+        }
         default: {
             return state
         }
