@@ -1,18 +1,21 @@
-import { MenuTab } from "./duck/types";
 import React from "react";
+import { Room } from "./rooms/duck/types";
+import classnames from 'classnames';
+import { RoomListContainer } from "./rooms/RoomListContainer";
+import { AddProjectFormContainer } from "./AddProjectFormContainer";
 
 interface Props {
-    currentTab: MenuTab;
-    setTab: (tab: MenuTab) => any;
+    project?: any
 }
 
-export const MainComponent = ({ currentTab , setTab}: Props) => {
-    console.log(MenuTab)
-    return (
+
+export const MainComponent = ({ project }: Props) => (
         <div>
-            <div>
-                <p>rooms</p>
-            </div>
+            {
+                (project) ?
+                    <RoomListContainer />
+                    :
+                    <AddProjectFormContainer />
+            }
         </div>
-    )
-}
+)

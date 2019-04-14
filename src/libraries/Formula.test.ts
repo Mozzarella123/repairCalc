@@ -73,6 +73,7 @@ test("scope without parameters", () => {
   equal(result, 10);
 });
 
+
 test("scope with params in", () => {
   const scopeWithParams = {
       formulas: {

@@ -7,10 +7,14 @@ import { Menu } from "./Menu";
 import { Route } from "react-router-dom";
 
 export const App = () => (
-  <div>
-    <Menu />
-    <Route exact path="/" component={MainContainer} />
-    <Route path="/editor" component={RoomEditor} />
-    <Route path="/reports" component={TemplateEditor} />
+  <div className='appContainer'>
+    <div className="menu">
+      <Menu />
+    </div>
+    <div className="active-part">
+      <Route exact path="/" component={MainContainer} />
+      <Route path="/editor" component={RoomEditor} />
+      <Route path="/reports" component={TemplateEditor} />
+    </div>
   </div>
 );
