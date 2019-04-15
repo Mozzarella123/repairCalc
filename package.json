@@ -1,5 +1,24 @@
 {
   "name": "editor",
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>src/setupTests.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer" 
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "setupFiles": [
+      "raf/polyfill"
+    ]
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -36,6 +55,8 @@
     "reactstrap": "^6.5.0"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.9.1",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.11",
     "@types/node": "^10.12.15",
     "@types/react-redux": "^7.0.6",
@@ -43,19 +64,21 @@
     "awesome-typescript-loader": "^5.2.1",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^2.0.1",
+    "enzyme-to-json": "^3.3.5",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^3.2.0",
     "import-glob-loader": "^1.1.0",
-    "jest": "^24.5.0",
+    "jest": "^24.7.1",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "node-sass-glob-importer": "^5.2.0",
+    "raf": "^3.4.1",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
-    "ts-jest": "^24.0.1",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.2.2",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",

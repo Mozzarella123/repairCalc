@@ -8,14 +8,11 @@ interface Props {
     project?: any
 }
 
-
 export const MainComponent = ({ project }: Props) => (
-        <div>
-            {
-                (project) ?
-                    <RoomListContainer />
-                    :
-                    <AddProjectFormContainer />
-            }
-        </div>
+    (project) ?
+        <RoomListContainer />
+        :
+        <AddProjectFormContainer />
 )
+
+export default MainComponent;
