@@ -9,3 +9,8 @@ build/
 dist
 workspace.code-workspace
 package-lock.json
+__snapshots__/
+
+# IDEA
+*.iml
+.idea
