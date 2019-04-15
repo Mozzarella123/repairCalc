@@ -2,7 +2,7 @@ import "jest";
 import EvaluatorService, { ContextType } from "./EvaluatorService";
 import { equal, deepEqual } from "assert";
 import Context from "./Context";
-import * as jsonpath from "jsonpath";
+import {query} from "jsonpath";
 
 test("formula test", () => {
   const entityRoom: ContextType = {
@@ -157,7 +157,7 @@ test("ex", () => {
     ]
   };
 
-  const result = jsonpath.query(scope, "$.works[*].formulas.price");
+  const result = query(scope, "$.works[*].formulas.price");
   
   deepEqual(result, [{ expression: "2 * 5" }, { expression: "2 * 6" }]);
 });
