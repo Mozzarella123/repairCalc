@@ -1,27 +1,27 @@
 import { Nav, NavItem, NavLink, TabContent, TabPane, Row, Col, FormGroup, Form, Label, Input, Button } from 'reactstrap';
 import React from 'react';
 
-export class AddProjectForm extends React.Component<{ 
-    onCreateProject: (title: string) => any 
-}, {}> {
+interface Props {
+    onCreateProject: (title: string) => any
+}
 
-    submit(e: React.FormEvent<HTMLFormElement>) {
-        const { _title } = this.refs
-        const { onCreateProject } = this.props
+export const AddProjectForm = ({ onCreateProject }: Props) => {
+    let _title : HTMLInputElement;
+    const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         onCreateProject(_title.value)
         _title.value = ''
     }
 
-    render() {
-        return (<Form onSubmit={(e) => this.submit(e)}>
-            <FormGroup>
-                <Label for="projectTitle">Project name</Label>
-                <Input type="text"
-                    ref='_title'
-                    name="title" id="projectTitle" />
-            </FormGroup>
-            <Button type="submit">Submit</Button>
-        </Form>)
-    }
+    return (<Form onSubmit={submit}>
+        <FormGroup>
+            <Label for="projectTitle">Project name</Label>
+            <Input type="text"
+                innerRef={(ref) => _title = ref}
+                name="title" id="projectTitle" />
+        </FormGroup>
+        <Button type="submit">Submit</Button>
+    </Form>)
 }
+
+export default AddProjectForm;
