@@ -1,5 +1,5 @@
-import { ActionTypes, Action } from "./types";
-import { room, rooms } from "./reducers";
+import { ActionTypes, Action } from "../duck/types";
+import { room, rooms } from "../duck/reducers";
 
 describe('room Reducer', () => {
     it("ADD_ROOM success", () => {

@@ -1,7 +1,7 @@
 import "jest";
-import EvaluatorService, { ContextType } from "./EvaluatorService";
+import EvaluatorService, { ContextType } from "../EvaluatorService";
 import { equal, deepEqual } from "assert";
-import Context from "./Context";
+import Context from "../Context";
 import {query} from "jsonpath";
 
 test("formula test", () => {
