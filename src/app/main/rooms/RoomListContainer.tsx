@@ -1,10 +1,14 @@
-
+import { connect } from "react-redux";
+import {RoomListComponent, RoomListDispatchProps, RoomListStateProps} from "./RoomListComponent";
+import AppState from "../../redux/AppState";
+import {selectRoom} from "../duck/redux/actions";
 
 export const RoomListContainer = connect(
-    (state: AppState) => ({
-        project : state.project
+    ({ main : state }: AppState): RoomListStateProps => ({
+        rooms: state.project.rooms,
+        selectedRoomId: state.selected.roomId
     }),
-    dispatch => ({
-        selectRoom: (room: string) => dispatch(selectRoom(room))
+    (dispatch): RoomListDispatchProps => ({
+        selectRoom: id => dispatch(selectRoom(id))
     })
-)(MainComponent);
+)(RoomListComponent);

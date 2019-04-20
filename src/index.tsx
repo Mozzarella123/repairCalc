@@ -3,15 +3,8 @@ import * as ReactDOM from "react-dom";
 import "./styles/main.scss";
 import { App } from "./app/App";
 import { Provider } from "react-redux";
-import { appReducer } from "./app/main/duck/reducers";
-import { createStore } from "redux";
 import { HashRouter} from 'react-router-dom'
-import rootReducer from "./reducer";
-
-export const store = createStore(
-  rootReducer
-  //devtools
-);
+import {store} from "./app/redux/store";
 
 ReactDOM.render(
   <Provider store={store}>
