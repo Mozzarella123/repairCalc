@@ -16,28 +16,40 @@ const templateStore = TemplateStore.create({
     "1": {
       id: "1",
       title: "Title 1",
+      isEditing: false,
       blocks: {
-        block1: {
+        "block1": {
           id: "block1",
           title: "block1",
-          type: "a"
+          type: "a",
+          isEditing: false,
+          content : "",
+          tempContent : ""
         },
-        block2: {
+        "block2": {
           id: "block2",
           title: "block2",
-          type: "b"
+          type: "b",
+          isEditing: false,
+          content : "",
+          tempContent : ""
         }
       }
     },
     "2": {
       id: "2",
-      title: "Title 2"
+      title: "Title 2",
+      blocks: {},
+      isEditing: false
     },
     "3": {
       id: "3",
-      title: "Title 2"
+      title: "Title 2",
+      blocks: {},
+      isEditing: false
     }
-  }
+  },
+  currentTemplate : null
 });
 
 export const TemplateEditor = observer(() => {
