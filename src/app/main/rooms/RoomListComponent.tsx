@@ -1,22 +1,27 @@
 import React from "react";
-import { Room } from "./duck/types";
 import { Nav, NavItem, NavLink, TabContent, TabPane, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+import Room from "../models/Room";
 
-interface Props {
+interface Props extends RoomListStateProps, RoomListDispatchProps {}
+
+export interface RoomListStateProps {
     rooms: Room[];
-    selectedRoom: string;
-    selectRoom: (room: string) => any;
+    selectedRoomId: number;
 }
 
-export const RoomListComponent = ({ rooms, selectedRoom, selectRoom }: Props) => {
+export interface RoomListDispatchProps {
+    selectRoom: (roomId: number) => any;
+}
+
+export const RoomListComponent = ({ rooms, selectedRoomId, selectRoom }: Props) => {
     return (
         <div>
             <Nav tabs>
                 {rooms.map((room, i) => (
                     <NavItem>
                         <NavLink
-                            className={classnames({ active: room.id === selectedRoom })}
+                            className={classnames({ active: room.id === selectedRoomId })}
                             onClick={() => { selectRoom(room.id) }}>
                             {room.title}
                         </NavLink>
@@ -25,15 +30,15 @@ export const RoomListComponent = ({ rooms, selectedRoom, selectRoom }: Props) =>
             </Nav>
             <TabContent>
                 {rooms.map((room) => (
-                <TabPane tabId={`room-${room.id}`}>
-                     <Row>
-                     <Col sm="12">
-                         Room
-                     </Col>
-                     </Row>
-                 </TabPane>
+                    <TabPane tabId={`room-${room.id}`}>
+                         <Row>
+                             <Col sm="12">
+                                 Room
+                             </Col>
+                         </Row>
+                     </TabPane>
                 ))}
             </TabContent>
         </div>
     )
-}
+};

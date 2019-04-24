@@ -1,33 +1,49 @@
-import { Action, ActionTypes } from "./types";
-import { Room } from "../rooms/duck/types";
+import MainState, {SelectedState} from "./state";
+import MainAction, {MainActionType} from "./actions";
+import {roomsReducer} from "../rooms/duck/reducers";
 
-export interface AppState {
-    project? : ProjectState
+function mainReducer(state: MainState = initialMainState, action: MainAction): MainState {
+
+	switch (action.type) {
+		case MainActionType.CREATE_PROJECT: {
+			// TODO: on server?
+			return state;
+		}
+
+		case MainActionType.SELECT_ROOM: {
+			return {
+				...state,
+				selected: {
+					...state.selected,
+					roomId: action.id
+				}
+			}
+		}
+
+		case MainActionType.REMOVE_ROOM:
+		case MainActionType.ADD_ROOM: {
+			return {
+				...state,
+				project: {
+					...state.project,
+					rooms: roomsReducer(state.project.rooms, action)
+				}
+			}
+		}
+
+		default: {
+			return state;
+		}
+	}
 }
 
-export interface ProjectState {
-    title : string;
-    currentRoom? : string;
-    rooms : Array<Room>; 
-}
+export const initialSelectedState: SelectedState = {
+	roomId: null
+};
 
-const initialAppState: AppState = {
-}
+export const initialMainState: MainState = {
+	project: null,
+	selected: initialSelectedState
+};
 
-export const appReducer = (state = initialAppState, action: Action): AppState => {
-
-    switch(action.type) {
-        case ActionTypes.CREATE_PROJECT: {
-            return {
-                ...state,
-                project: {
-                    title: action.title,
-                    rooms : []
-                }
-            }
-        }
-        default: {
-            return state
-        }
-    }
-}
+export default mainReducer;
