@@ -1,5 +1,5 @@
 import { roomReducer, roomsReducer } from "../duck/reducers";
-import MainAction, {addRoom, MainActionType, removeRoom} from "../../duck/redux/actions";
+import MainAction, {addRoom, MainActionType, removeRoom} from "../../duck/actions";
 
 describe('room Reducer', () => {
     it("ADD_ROOM success", () => {

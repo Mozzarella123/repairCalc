@@ -1,6 +1,5 @@
 import {createStore} from "redux";
-import appReducer from "./reducers";
-import {initialAppState} from "./AppState";
+import appReducer, {initialAppState} from "./reducers";
 
 export const store = createStore(
 	appReducer,

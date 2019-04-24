@@ -1,6 +1,6 @@
-import MainState, {initialMainState} from "./MainState";
+import MainState, {SelectedState} from "./state";
 import MainAction, {MainActionType} from "./actions";
-import {roomsReducer} from "../../rooms/duck/reducers";
+import {roomsReducer} from "../rooms/duck/reducers";
 
 function mainReducer(state: MainState = initialMainState, action: MainAction): MainState {
 
@@ -36,5 +36,14 @@ function mainReducer(state: MainState = initialMainState, action: MainAction): M
 		}
 	}
 }
+
+export const initialSelectedState: SelectedState = {
+	roomId: null
+};
+
+export const initialMainState: MainState = {
+	project: null,
+	selected: initialSelectedState
+};
 
 export default mainReducer;

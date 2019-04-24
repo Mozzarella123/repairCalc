@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { MainComponent } from './MainComponent';
 import { AddProjectForm } from './AddProjectForm';
-import {createProject} from "./duck/redux/actions";
+import {createProject} from "./duck/actions";
 
 export const AddProjectFormContainer = connect(
     null,

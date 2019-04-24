@@ -4,7 +4,7 @@ import "./styles/main.scss";
 import { App } from "./app/App";
 import { Provider } from "react-redux";
 import { HashRouter} from 'react-router-dom'
-import {store} from "./app/redux/store";
+import {store} from "./app/duck/store";
 
 ReactDOM.render(
   <Provider store={store}>

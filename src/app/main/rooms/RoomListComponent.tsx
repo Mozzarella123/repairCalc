@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, NavItem, NavLink, TabContent, TabPane, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-import Room from "../duck/models/Room";
+import Room from "../models/Room";
 
 interface Props extends RoomListStateProps, RoomListDispatchProps {}
 

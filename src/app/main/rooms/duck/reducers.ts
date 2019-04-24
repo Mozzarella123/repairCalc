@@ -1,6 +1,5 @@
-import Room from "../../duck/models/Room";
-import MainAction, {MainActionType} from "../../duck/redux/actions";
-
+import Room from "../../models/Room";
+import MainAction, {MainActionType} from "../../duck/actions";
 
 export const roomsReducer = (state: Array<Room>, action: MainAction): Array<Room> => {
 	switch (action.type) {
