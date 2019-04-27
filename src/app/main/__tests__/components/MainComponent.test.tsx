@@ -3,7 +3,7 @@ import React from 'react';
 import { MainComponent } from '../../MainComponent'
 
 jest.mock('../../rooms/RoomListContainer', () => <div>rooms</div>)
-jest.mock('../../AddProjectFormContainer', () => <div>add project</div>)
+jest.mock('../../projects/AddProjectFormContainer', () => <div>add project</div>)
 
 describe("MainComponent UI test", () => {
     it("Renders Correctly", () => {
