@@ -5,7 +5,9 @@ import {selectRoom} from "../../duck/actions";
 describe('Select room tests', () => {
 	it('First room select', () => {
 		const state: MainState = {
+			projectsList: [],
 			project: {
+				id: 1,
 				title: 'test_project',
 				rooms: [
 					{ id: 1, title: 'test_room1'},

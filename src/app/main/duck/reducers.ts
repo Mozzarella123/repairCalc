@@ -43,6 +43,7 @@ export const initialSelectedState: SelectedState = {
 
 export const initialMainState: MainState = {
 	project: null,
+	projectsList: [],
 	selected: initialSelectedState
 };
 
