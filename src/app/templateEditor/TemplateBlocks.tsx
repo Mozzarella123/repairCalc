@@ -4,12 +4,14 @@ import Button from "reactstrap/lib/Button";
 import { observer } from "mobx-react";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, ContentState, convertFromRaw } from "draft-js";
+
 export interface TemplateBlockProps {
   blocks: Map<string, ITemplateBlock>;
   isEditing?: boolean;
   editBlockHandler?: (id: string, value: boolean) => void;
   removeBlockHandler?: (id: string) => void;
 }
+
 export const TemplateBlocks: React.SFC<TemplateBlockProps> = observer(
   (props: TemplateBlockProps) => (
     <div className="template-blocks">
@@ -35,7 +37,7 @@ export const TemplateBlocks: React.SFC<TemplateBlockProps> = observer(
           <div className="title"> {block.title}</div>
           <div className="content">
             <Editor
-             //readonly
+              readonly
               toolbarHidden
               editorState={
                 block.content !== ""
