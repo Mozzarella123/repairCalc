@@ -49,7 +49,7 @@ const templateStore = TemplateStore.create({
       isEditing: false
     }
   },
-  currentTemplate : null
+  currentTemplate : 1
 });
 
 export const TemplateEditor = observer(() => {

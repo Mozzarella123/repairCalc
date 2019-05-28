@@ -36,8 +36,7 @@ export const TemplateBlocks: React.SFC<TemplateBlockProps> = observer(
           </div>
           <div className="title"> {block.title}</div>
           <div className="content">
-            <Editor
-              readonly
+            <Editor 
               toolbarHidden
               editorState={
                 block.content !== ""
