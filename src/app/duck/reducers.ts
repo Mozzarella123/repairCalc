@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 import mainReducer from "../main/duck/reducers";
-import templateEditorReducers, {initialTemplateEditorState} from "../templateEditor/duck/reducers";
+import templateEditorReducers from "../templateEditor/duck/reducers";
 import roomEditorReducers, {initialRoomEditorState} from "../roomEditor/duck/reducers";
 import {initialMainState} from "../main/duck/reducers";
 import AppState from "./state";
@@ -13,7 +13,11 @@ const appReducer = combineReducers({
 
 export const initialAppState : AppState = {
 	main: initialMainState,
-	templateEditor: initialTemplateEditorState,
+	templateEditor: { templates : [{
+		title : "Template 1"
+	}, {
+		title : "Template 2"
+	}]},
 	roomEditor: initialRoomEditorState
 };
 

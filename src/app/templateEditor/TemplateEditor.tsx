@@ -2,7 +2,7 @@ import * as React from "react";
 import TemplateStore from "../../models/TemplatesStore";
 import { observer } from "mobx-react";
 import SplitPane from "react-split-pane";
-import { TemplatesMenu } from "./TemplatesMenu";
+import { TemplatesMenuComponent } from "./TemplatesMenuComponent";
 import { TemplateBlocks } from "./TemplateBlocks";
 import Button from "reactstrap/lib/Button";
 import { TemplateBlocksMenu } from "./TemplateBlocksMenu";
@@ -11,6 +11,7 @@ import ModalBody from "reactstrap/lib/ModalBody";
 import ModalHeader from "reactstrap/lib/ModalHeader";
 import ModalFooter from "reactstrap/lib/ModalFooter";
 import { TemplateBlockEditor } from "./TemplateBlockEditor";
+import { TemplatesMenuContainer } from "./TemplatesMenuContainer";
 const templateStore = TemplateStore.create({
   templates: {
     "1": {
@@ -52,7 +53,7 @@ const templateStore = TemplateStore.create({
   currentTemplate : 1
 });
 
-export const TemplateEditor = observer(() => {
+export const TemplateEditor =() => {
   const { currentTemplate } = templateStore,
     mode =
       currentTemplate && currentTemplate.isEditing
@@ -84,10 +85,9 @@ export const TemplateEditor = observer(() => {
         {currentTemplate && currentTemplate.isEditing ? (
           <TemplateBlocksMenu />
         ) : (
-          <TemplatesMenu
-            items={templateStore.templates}
-            templateClickHandler={templateStore.setCurrentTemplate}
-            templateEditHandler={templateStore.setIsEditing}
+          <TemplatesMenuContainer
+            // templateClickHandler={templateStore.setCurrentTemplate}
+            // templateEditHandler={templateStore.setIsEditing}
           />
         )}
 
@@ -140,4 +140,4 @@ export const TemplateEditor = observer(() => {
       ) : null}
     </div>
   );
-});
+};
