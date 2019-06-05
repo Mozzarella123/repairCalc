@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from 'classnames';
 import { RoomListContainer } from "./rooms/RoomListContainer";
-import { AddProjectFormContainer } from "./AddProjectFormContainer";
+import { AddProjectFormContainer } from "./projects/AddProjectFormContainer";
 
 interface Props {
     project?: any

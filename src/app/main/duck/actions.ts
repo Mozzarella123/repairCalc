@@ -1,13 +1,25 @@
 // actions, that will be handled only in main redux sub-store
 
 import Room from "../models/Room";
+import ProjectInfo from "../models/ProjectInfo";
 
 export enum MainActionType {
+	SET_PROJECT_LIST = 'SET_PROJECT_LIST',
 	CREATE_PROJECT = 'CREATE_PROJECT',
 	ADD_ROOM = 'ADD_ROOM',
 	REMOVE_ROOM = 'REMOVE_ROOM',
 	SELECT_ROOM = 'SELECT_ROOM'
 }
+
+export interface SetProjectListAction {
+	type: MainActionType.SET_PROJECT_LIST,
+	projectList: Array<ProjectInfo>
+}
+
+export const setProrjectList = (projectList: Array<ProjectInfo>): SetProjectListAction => ({
+	type: MainActionType.SET_PROJECT_LIST,
+	projectList
+});
 
 export interface CreateProjectAction {
 	type : MainActionType.CREATE_PROJECT,

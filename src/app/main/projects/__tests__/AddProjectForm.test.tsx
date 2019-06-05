@@ -1,6 +1,6 @@
 import { mount } from "enzyme";
 import React from "react" ;
-import { AddProjectForm } from "../../AddProjectForm";
+import { AddProjectForm } from "../AddProjectForm";
 
 
 describe("AddProjectForm UI", ()=> {
