@@ -1,20 +1,19 @@
 {
-    "compilerOptions": {
-      "outDir": "./dist/",
-      "noImplicitAny": true,
-      "lib": ["es5", "es6", "dom"],
-      "module": "es6",
-      "target": "es5",
-      "downlevelIteration" : true,
-      "jsx": "react",
-      "allowJs": true,
-      "moduleResolution" :"node",
-      "allowSyntheticDefaultImports": true,
-      "esModuleInterop" : true,
-      "skipLibCheck": true
-    },
-    "exclude": [
-      "node_modules",
-      "src/setupTests.ts"
-    ]
-  }
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "lib": ["es5", "es6", "dom"],
+    "module": "es6",
+    "target": "es5",
+    "downlevelIteration" : true,
+    "jsx": "react",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop" : true,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "src/setupTests.ts"
+  ]
+}
