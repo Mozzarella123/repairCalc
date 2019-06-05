@@ -1,5 +1,7 @@
-interface Template {
+import Block from "./Block";
+
+export default interface Template {
     id? : number;
     title?: string;
-    blocks?: Array<any>
+    blocks?: Array<Block>
 }

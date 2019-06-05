@@ -18,4 +18,4 @@ export const createTemplate = (title: string) : CreateTemplateAction => ({
 type TemplatesAction =
     CreateTemplateAction
     
-export default TemplatesAction
+export default TemplatesAction;

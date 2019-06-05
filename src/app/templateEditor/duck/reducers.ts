@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import TemplateEditorState from "./state";
 import TemplatesAction, { TemplatesActionType } from "./actions";
+import Template from "../models/Template";
 
 
 export const templates = (state: Array<Template> = [], action: TemplatesAction) => {
@@ -8,9 +9,10 @@ export const templates = (state: Array<Template> = [], action: TemplatesAction) 
         case TemplatesActionType.CREATE_TEMPLATE : {
             return [...state, template({}, action)]
         }
+
         default: { 
             return state
-         }
+        }
     }
 }
 
@@ -21,6 +23,7 @@ export const template = (state : Template = {}, action : TemplatesAction) => {
                 title : action.title
             }
         }
+
         default : {
             return state;
         }

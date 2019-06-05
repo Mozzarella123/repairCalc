@@ -4,6 +4,7 @@ import { ITemplate } from '../../models/TemplatesStore';
 import NavItem from 'reactstrap/lib/NavItem';
 import NavLink from 'reactstrap/lib/NavLink';
 import Button from 'reactstrap/lib/Button';
+import Template from './models/Template';
 
 export interface TemplatesMenuStateProps {
     templates: Array<Template>;
