@@ -12,6 +12,7 @@ import ModalHeader from "reactstrap/lib/ModalHeader";
 import ModalFooter from "reactstrap/lib/ModalFooter";
 import { TemplateBlockEditor } from "./TemplateBlockEditor";
 import { TemplatesMenuContainer } from "./TemplatesMenuContainer";
+
 const templateStore = TemplateStore.create({
   templates: {
     "1": {
@@ -101,7 +102,8 @@ export const TemplateEditor =() => {
           <div />
         )}
       </SplitPane>
-      {currentTemplate && currentTemplate.editingBlock ? (
+      {
+        currentTemplate && currentTemplate.editingBlock ? (
         <Modal isOpen={true}>
           <ModalHeader
             toggle={() =>
