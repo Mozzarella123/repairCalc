@@ -32,7 +32,54 @@ interface DispatchProps {
 
 interface Props extends StateProps, DispatchProps {}
 
-export const TemplateEditorBase = ({ }: Props) => {
+const templateStore = TemplateStore.create({
+    templates: {
+      "1": {
+        id: "1",
+        title: "Title 1",
+        isEditing: false,
+        blocks: {
+          "block1": {
+            id: "block1",
+            title: "block1",
+            type: "a",
+            isEditing: false,
+            content : "",
+            tempContent : ""
+          },
+          "block2": {
+            id: "block2",
+            title: "block2",
+            type: "b",
+            isEditing: false,
+            content : "",
+            tempContent : ""
+          }
+        }
+      },
+      "2": {
+        id: "2",
+        title: "Title 2",
+        blocks: {},
+        isEditing: false
+      },
+      "3": {
+        id: "3",
+        title: "Title 2",
+        blocks: {},
+        isEditing: false
+      }
+    },
+    currentTemplate : 1
+  });
+
+export const TemplateEditorBase = ({ templates, fetchTemplates }: Props) => {
+    React.useEffect(() => {
+        if (templates.length === 0) {
+            fetchTemplates();
+        }
+    })
+
     const { currentTemplate } = templateStore,
         mode =
             currentTemplate && currentTemplate.isEditing

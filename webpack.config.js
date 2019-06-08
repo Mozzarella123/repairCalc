@@ -20,9 +20,15 @@ module.exports = {
         compress: true,
         port: 9000,
         watchContentBase: true,
-        setup: function(app) {
+        before: function(app) {
             app.post('/login', function(req, res) {
                 res.json({})
+            })
+
+            app.get('/templates', function(req, res) {
+                res.json([
+                    { id: 1, title: 'test', blocks: []}
+                ])
             })
         }
     },
