@@ -19,7 +19,12 @@ module.exports = {
         contentBase: __dirname,
         compress: true,
         port: 9000,
-        watchContentBase: true
+        watchContentBase: true,
+        setup: function(app) {
+            app.post('/login', function(req, res) {
+                res.json({})
+            })
+        }
     },
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.

@@ -1,21 +1,13 @@
+import { InferValueTypes } from "../../duck/helpers";
+import * as actions from './action-creators';
+
 export enum TemplatesActionType {
-	CREATE_TEMPLATE = 'CREATE_TEMPLATE',
-	ADD_ROOM = 'ADD_ROOM',
-	REMOVE_ROOM = 'REMOVE_ROOM',
-	SELECT_ROOM = 'SELECT_ROOM'
+	TE_CREATE_TEMPLATE = 'TE_CREATE_TEMPLATE',
+	TE_SET_TEMPLATES = 'TE_SET_TEMPLATES',
+	TE_UPDATE_TEMPLATE = 'TE_UPDATE_TEMPLATE',
+	TE_SELECT_TEMPLATE = 'TE_SELECT_TEMPLATE'
 }
 
-export interface CreateTemplateAction {
-	type : TemplatesActionType.CREATE_TEMPLATE,
-	title: string
-}
-
-export const createTemplate = (title: string) : CreateTemplateAction => ({
-	type : TemplatesActionType.CREATE_TEMPLATE,
-	title
-});
-
-type TemplatesAction =
-    CreateTemplateAction
+type TemplatesAction = ReturnType<InferValueTypes<typeof actions>>;
     
 export default TemplatesAction;
