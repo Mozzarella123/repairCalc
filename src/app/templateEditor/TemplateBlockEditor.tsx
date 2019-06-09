@@ -9,7 +9,7 @@ export interface ITemplateBlockEditorProps {
 export const TemplateBlockEditor = (props: ITemplateBlockEditorProps) => (
   <div className="templateblock-editor">
     <Editor
-    onEditorStateChange={editorState => {
+      onEditorStateChange={editorState => {
         props.block.setTempContent(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
       }}
     />
