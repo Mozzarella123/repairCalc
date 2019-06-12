@@ -8,7 +8,7 @@ import AppState from "./state";
 const appReducer = combineReducers({
 	main: mainReducer,
 	templateEditor: templateEditorReducers,
-	roomEditor: roomEditorReducers
+	// roomEditor: roomEditorReducers
 });
 
 export const initialAppState: AppState = {

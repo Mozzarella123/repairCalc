@@ -6,6 +6,7 @@ import { MainContainer } from "./main/MainContainer";
 import { Menu } from "./Menu";
 import { Route } from "react-router-dom";
 import LoginForm from "./login/components/LoginFrom";
+import TemplatesEditorLayout from "./templateEditor/TemplateEditorLayout";
 
 export const App = () => {
     const [isLogin, setIsLogin] = React.useState(false);
@@ -21,7 +22,7 @@ export const App = () => {
                     <div className="active-part">
                         <Route exact path="/" component={MainContainer} />
                         <Route path="/editor" component={RoomEditor} />
-                        <Route path="/reports" component={TemplateEditor} />
+                        <Route path="/reports" component={TemplatesEditorLayout} />
                     </div>
                 </React.Fragment> : 
                 <LoginForm isLoginned={isLogin} onLogin={() => setIsLogin(!isLogin)}/> 

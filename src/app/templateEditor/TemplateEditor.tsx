@@ -9,7 +9,7 @@ import Modal from "reactstrap/lib/Modal";
 import ModalBody from "reactstrap/lib/ModalBody";
 import ModalHeader from "reactstrap/lib/ModalHeader";
 import ModalFooter from "reactstrap/lib/ModalFooter";
-import { TemplateBlockEditor } from "./TemplateBlockEditor";
+import TemplateBlockEditor from "./TemplateBlockEditor";
 import Template from "./models/Template";
 import { connect } from "react-redux";
 import AppState from "../duck/state";
@@ -19,6 +19,8 @@ import { ThunkDispatch } from "redux-thunk";
 import TemplatesAction from "./duck/actions";
 import { fetchTemplates } from "./duck/thunks";
 import TemplatesMenu from "./TemplatesMenu";
+import { EditorState, convertFromHTML, ContentState, convertToRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
 
 interface StateProps {
     templates: Template[];
@@ -92,7 +94,7 @@ export const TemplateEditorBase = ({ templates, fetchTemplates }: Props) => {
                     currentTemplate && currentTemplate.isEditing ? 
                         <React.Fragment>
                             <Button>Save</Button>
-                            <Button onClick={() => templateStore.setIsEditing(currentTemplate.id, false)}>
+                            <Button onClick={() => {}}>
                                 Cancel
                             </Button>
                         </React.Fragment> : 
@@ -131,7 +133,7 @@ export const TemplateEditorBase = ({ templates, fetchTemplates }: Props) => {
                             {currentTemplate.editingBlock.title}
                         </ModalHeader>
                         <ModalBody>
-                            <TemplateBlockEditor block={currentTemplate.editingBlock} />
+                            {/* <TemplateBlockEditor block={currentTemplate.editingBlock} /> */}
                         </ModalBody>
                         <ModalFooter>
                             <Button
@@ -160,7 +162,7 @@ export const TemplateEditorBase = ({ templates, fetchTemplates }: Props) => {
 const TemplateEditor = connect(
     ({ templateEditor: state }: AppState): StateProps => ({
         templates: state.templates,
-        selectedTemplate: state.templates.find(template => template.id === state.selected.templateId)
+        selectedTemplate: state.selected.template
     }),
     (dispatch: ThunkDispatch<AppState, {}, TemplatesAction>): DispatchProps => ({
         fetchTemplates: () => dispatch(fetchTemplates())

@@ -27,7 +27,7 @@ module.exports = {
 
             app.get('/templates', function(req, res) {
                 res.json([
-                    { id: 1, title: 'test', blocks: []}
+                    { id: 1, title: 'test', blocks: [{ id: 1, title: 'test', content: '{}' }]}
                 ])
             })
         }

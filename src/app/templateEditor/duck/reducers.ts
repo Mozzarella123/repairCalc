@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
 import TemplateEditorState, { SelectedTemplateEditorState } from "./state";
 import TemplatesAction, { TemplatesActionType } from "./actions";
-import Template from "../models/Template";
 
 const initialSelectedState: SelectedTemplateEditorState = {
-    templateId: null
+    template: null,
+    block: null,
+    isEditing: false
 }
 
 export const initialTemplateState: TemplateEditorState = {
@@ -12,50 +13,108 @@ export const initialTemplateState: TemplateEditorState = {
     selected: initialSelectedState
 }
 
-export const templates = (state: Array<Template> = [], action: TemplatesAction) => {
-    switch (action.type) {
-        case TemplatesActionType.TE_CREATE_TEMPLATE : {
-            return [...state, template(null, action)]
-        }
+const templateEditor = (state: TemplateEditorState = initialTemplateState, action: TemplatesAction): TemplateEditorState => {
+    switch(action.type) {
 
-        case TemplatesActionType.TE_SET_TEMPLATES: {
-            return action.templates;
-        }
-
-        case TemplatesActionType.TE_UPDATE_TEMPLATE: {
-            return state.map(
-                template => template.id === action.template.id ? 
-                    { ...action.template } : 
-                    template
-            )
-        }
-
-        default: { 
-            return state
-        }
-    }
-}
-
-export const template = (state : Template = null, action : TemplatesAction) => {
-    switch (action.type) {
-        case TemplatesActionType.TE_CREATE_TEMPLATE : {
+        case TemplatesActionType.CREATE_TEMPLATE: {
             return {
-                title : action.title
+                ...state,
+                selected: {
+                    ...state.selected,
+                    template: {
+                        id: state.templates.length > 0 ? 
+                            state.templates.reduce(
+                                (maxId, template) => template.id > maxId ? template.id : maxId, 
+                                state.templates[0].id
+                            ) + 1 : 
+                            0,
+                        title: '',
+                        blocks: []
+                    }
+                }
             }
         }
 
-        default : {
-            return state;
-        }
-    }
-}
-
-export const selected = (state: SelectedTemplateEditorState = initialSelectedState, action: TemplatesAction): SelectedTemplateEditorState => {
-    switch (action.type) {
-        case TemplatesActionType.TE_SELECT_TEMPLATE: {
+        case TemplatesActionType.SELECT_TEMPLATE: {
             return {
                 ...state,
-                templateId: action.id
+                selected: {
+                    ...state.selected,
+                    template: state.templates.find(template => template.id === action.id)
+                }
+            }
+        }
+
+        case TemplatesActionType.SELECT_EDIT_TEMPLATE: {
+            const template = state.templates.find(template => template.id === action.id);
+
+            return {
+                ...state,
+                selected: {
+                    ...state.selected,
+                    isEditing: true,
+                    template: { 
+                        ...template,
+                        blocks: template.blocks.map(block => ({ ...block }))
+                    }
+                }
+            }
+        }
+
+        case TemplatesActionType.SET_TEMPLATES: {
+            return {
+                ...state,
+                templates: action.templates
+            }
+        }
+
+        case TemplatesActionType.UPDATE_TEMPLATE: {
+            return {
+                ...state,
+                templates: state.templates.map(
+                    template => template.id === action.template.id ? 
+                        { ...action.template } : 
+                        template
+                )
+            }
+        }
+
+        case TemplatesActionType.UPDATE_SELECTED_TEMPLATE: {
+            return {
+                ...state,
+                selected: {
+                    ...state.selected,
+                    template: action.template
+                }
+            }
+        }
+
+        case TemplatesActionType.SELECT_BLOCK: {
+            return {
+                ...state,
+                selected: {
+                    ...state.selected,
+                    block: {
+                        ...state.selected.template.blocks
+                            .find(block => block.id === action.id)
+                    }
+                }
+            }
+        }
+
+        case TemplatesActionType.SET_BLOCK: {
+            return {
+                ...state,
+                selected: {
+                    ...state.selected,
+                    block: null,
+                    template: {
+                        ...state.selected.template,
+                        blocks: state.selected.template.blocks.map(
+                            block => block.id === action.block.id ? action.block : block
+                        )
+                    }
+                }
             }
         }
 
@@ -65,9 +124,6 @@ export const selected = (state: SelectedTemplateEditorState = initialSelectedSta
     }
 }
 
-const templateEditorReducers = combineReducers({
-    templates,
-    selected
-});
+const templateEditorReducers = templateEditor;
 
 export default templateEditorReducers;
