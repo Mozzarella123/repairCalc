@@ -4,7 +4,7 @@ import TemplatesAction from "./actions";
 import { isTemplatesArray, isTemplate } from "../models/Template";
 import { setTemplates, updateTemplate, selectTemplate } from "./action-creators";
 
-const TEMPLATES_PATH = '/templates'
+const TEMPLATES_PATH = '/reports'
 
 export function fetchTemplates(): ThunkAction<void, {}, {}, TemplatesAction> {
     return (dispatch: ThunkDispatch<AppState, {}, TemplatesAction>) => {

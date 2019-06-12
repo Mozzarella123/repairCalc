@@ -33,13 +33,13 @@ module.exports = {
                 res.json({})
             })
 
-            app.get('/templates', function(req, res) {
+            app.get('/reports', function(req, res) {
                 res.json([
-                    { id: 1, title: 'test', blocks: [{ id: 1, title: 'test', content: '{}' }]}
+                    { id: 1, title: 'test', blocks: [{ id: 1, title: 'test', content: '<b>hi</b>' }]}
                 ])
             })
 
-            app.post('/templates/:id', function(req, res) {
+            app.post('/reports/:id', function(req, res) {
                 const id = req.params.id;
                 res.send('ok')
             })
