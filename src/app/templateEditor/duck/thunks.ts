@@ -34,7 +34,7 @@ export function saveTemplate(): ThunkAction<void, {}, {}, TemplatesAction> {
         fetch(`${TEMPLATES_PATH}/${template.id}`, {
             method: 'POST',
             headers: {
-                contentType: 'application/json'
+                'Content-Type': 'application/json',
             }, 
             body: JSON.stringify(template)
         })

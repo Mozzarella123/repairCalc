@@ -21,12 +21,14 @@ module.exports = {
         port: 9000,
         watchContentBase: true,
         before: function(app) {
-            const bodyParser = require('body-parser');
+            let store = {
+                templates: [
+                    { id: 1, title: 'test', blocks: [{ id: 1, title: 'test', content: '<b>hi</b>' }]},
+                    { id: 2, title: 'test_too', blocks: [{ id: 1, title: 'test', content: '<p>hi</p>' }]}
+                ]
+            };
 
-            app.use(bodyParser.urlencoded({
-                extended: true
-            }));
-
+            var bodyParser = require('body-parser');    
             app.use(bodyParser.json());
 
             app.post('/login', function(req, res) {
@@ -34,14 +36,44 @@ module.exports = {
             })
 
             app.get('/reports', function(req, res) {
-                res.json([
-                    { id: 1, title: 'test', blocks: [{ id: 1, title: 'test', content: '<b>hi</b>' }]}
-                ])
+                res.json(store.templates)
             })
 
             app.post('/reports/:id', function(req, res) {
-                const id = req.params.id;
-                res.send('ok')
+                const id = +req.params.id;
+                const recievedTemplate = req.body;
+
+                if (!recievedTemplate || typeof recievedTemplate.id !== 'number') {
+                    res.status = 400;
+                    res.send('bad request');
+                    return;
+                }
+
+                if (store.templates.find(template => template.id === id)) {
+                    store.templates = store.templates.map(template => template.id === id ? recievedTemplate : template );
+                    res.send('ok');
+                } else {
+                    res.status = 404;
+                    res.send('template not found');
+                }
+            })
+
+            app.put('/reports', function(req, res) {
+                const recievedTemplate = req.body;
+
+                const maxId = store.templates.reduce((max, template) => 
+                    template.id > max ? template.id : max, Number.MIN_VALUE
+                );
+
+                const resultTemplate = {
+                    ...recievedTemplate,
+                    id: maxId
+                }
+
+                store.templates.push(resultTemplate);
+
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(resultTemplate));
             })
         }
     },
