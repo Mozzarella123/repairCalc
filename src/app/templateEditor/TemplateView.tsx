@@ -6,6 +6,10 @@ import AppState from '../duck/state';
 import Block from './models/Block';
 import { selectBlock } from './duck/action-creators';
 import TemplateBlockEditor from './TemplateBlockEditor';
+import Button from 'reactstrap/lib/Button';
+import { ThunkDispatch } from 'redux-thunk';
+import TemplatesAction from './duck/actions';
+import { saveTemplate } from './duck/thunks';
 
 interface StateProps {
     template: Template;
@@ -36,6 +40,7 @@ const TemplatesViewBase = ({ template, saveTemplate, setEditingBlock, editingBlo
                 <TemplateBlockEditor/>
                 : null
         }
+        <Button onClick={() => saveTemplate()}>Save</Button>
     </div>
 )
 
@@ -44,8 +49,8 @@ const TemplatesView = connect(
         template: state.selected.template,
         editingBlock: state.selected.block
     }),
-    (dispatch): DispatchProps => ({
-        saveTemplate: () => {},
+    (dispatch: ThunkDispatch<AppState, {}, TemplatesAction>): DispatchProps => ({
+        saveTemplate: () => dispatch(saveTemplate()),
         setEditingBlock: block => dispatch(selectBlock(block.id))
     })
 )(TemplatesViewBase);

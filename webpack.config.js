@@ -21,6 +21,14 @@ module.exports = {
         port: 9000,
         watchContentBase: true,
         before: function(app) {
+            const bodyParser = require('body-parser');
+
+            app.use(bodyParser.urlencoded({
+                extended: true
+            }));
+
+            app.use(bodyParser.json());
+
             app.post('/login', function(req, res) {
                 res.json({})
             })
@@ -29,6 +37,11 @@ module.exports = {
                 res.json([
                     { id: 1, title: 'test', blocks: [{ id: 1, title: 'test', content: '{}' }]}
                 ])
+            })
+
+            app.post('/templates/:id', function(req, res) {
+                const id = req.params.id;
+                res.send('ok')
             })
         }
     },
