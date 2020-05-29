@@ -7,7 +7,8 @@ import Input from 'reactstrap/lib/Input';
 import Button from 'reactstrap/lib/Button';
 
 interface Props {
-
+    isLoginned: boolean;
+    onLogin: (opt: { username: string, password: string }) => any;
 }
 
 interface State {
@@ -67,7 +68,7 @@ export default class LoginForm extends React.Component<Props, State> {
                 contentType: 'application/json'
             }
         })
-            .then(res => console.log(res))
+            .then(res =>  {this.props.onLogin({ username, password })}) 
             .catch(err => console.error(err));
     }
 }
